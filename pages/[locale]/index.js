@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from '../../styles/Home.module.css'
 import { getStaticPaths, makeStaticProps } from '../../lib/getStatic'
 import { useTranslation } from 'next-i18next'
+import {getContent} from "../../utils/getContent";
 
 //const getStaticProps = makeStaticProps(['common', 'footer'])
 /*const getStaticProps = () => {
@@ -13,18 +14,22 @@ import { useTranslation } from 'next-i18next'
 }*/
 
 export async function getStaticProps(ctx) {
-  console.log(ctx, "ctx")
+  //const {data} = await getContent({path_file: "/content/main/en.md"});
+  const {data} = await getContent({path_file: ctx.params.locale === "en" ? "/content/main/en.md" : "/content/main/ru.md"});
   return {
     props: {
-      ...makeStaticProps(['common', 'footer'])
+      ...makeStaticProps(['common', 'footer']),
+      data
     }
   }
 }
 
 //export { getStaticPaths, getStaticProps }
 export { getStaticPaths }
-export default function Home() {
+export default function Home({data}) {
+
   const { t } = useTranslation('common')
+
   return (
     <div className={styles.container}>
       <Head>
