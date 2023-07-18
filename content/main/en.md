@@ -1,3 +1,4 @@
 ---
-test: "test"
+title: "Main page"
+link: "Cars"
 ---
